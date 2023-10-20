@@ -1,40 +1,40 @@
 package tn.esprit.spring.services;
 
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import java.time.LocalDate; // Assurez-vous d'importer LocalDate si ce n'est pas déjà fait
 
 public class SubscriptionServiceTest {
     @InjectMocks
-    private SubscriptionServicesImpl subscriptionService;
+    SubscriptionServicesImpl subscriptionService;
 
     @Mock
-    private ISubscriptionRepository subscriptionRepository;
+    ISubscriptionRepository subscriptionRepository;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
+    @Mock
+    ISkierRepository skierRepository;
 
     @Test
-    public void testRetrieveSubscription() {
-        // Créez un objet Subscription fictif pour simuler une récupération réussie
+    public void testAddSubscription() {
+        // Initialisez un objet Subscription pour le test
         Subscription subscription = new Subscription();
-        subscription.setNumSub(1L);
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
+        subscription.setStartDate(LocalDate.now());
+        subscription.setTypeSub(TypeSubscription.ANNUAL);
 
-        // Appelez la méthode du service
-        Subscription retrievedSubscription = subscriptionService.retrieveSubscriptionById(1L);
+        // Définissez le comportement attendu lors de l'appel à la méthode repository
+        Mockito.when(subscriptionRepository.save(Mockito.any(Subscription.class))).thenReturn(subscription);
 
-        // Vérifiez que la souscription récupérée n'est pas nulle
-        Assertions.assertNotNull(retrievedSubscription);
+        // Appelez la méthode que vous testez
+        Subscription result = subscriptionService.addSubscription(subscription);
 
-        // Assurez-vous que le numéro de souscription récupéré correspond à celui de l'objet fictif créé
-        Assertions.assertEquals(1L, retrievedSubscription.getNumSub());
+        // Effectuez des assertions pour vérifier le résultat
+        Assertions.assertNotNull(result);
+        // Vous pouvez ajouter d'autres assertions en fonction de votre logique métier.
     }
 }
