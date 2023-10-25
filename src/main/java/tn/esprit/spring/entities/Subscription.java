@@ -2,6 +2,7 @@ package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -29,5 +30,7 @@ public class Subscription implements Serializable {
 	Float price;
 //	@Enumerated(EnumType.STRING)
 	TypeSubscription typeSub;
+
+
 
 }
