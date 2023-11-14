@@ -48,11 +48,6 @@
 			<version>3.9.0</version>
 			<scope>test</scope>
 		</dependency>
-<dependency>
-  <groupId>tn.esprit.spring</groupId>
-  <artifactId>gestion-station-ski</artifactId>
-  <version>1.0.0.0</version>
-</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -63,6 +58,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.26</version> <!-- Assurez-vous d'utiliser la version appropriée -->
+		</dependency>
+		<!-- Adding the project itself as a dependency -->
+		<dependency>
+			<groupId>tn.esprit.spring</groupId>
+			<artifactId>gestion-station-ski</artifactId>
+			<version>1.0.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>
