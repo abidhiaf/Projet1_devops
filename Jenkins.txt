@@ -4,31 +4,37 @@ pipeline {
     stages {
         stage('Checkout from Git') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/ghadaaoun']],
-                    userRemoteConfigs: [[url: 'https://github.com/abidhiaf/Projet1_devops.git']]
-                ])
+                script {
+                    checkout([$class: 'GitSCM', 
+                        branches: [[name: 'ghadaaoun']],
+                        userRemoteConfigs: [[url: 'https://github.com/abidhiaf/Projet1_devops.git']]
+                    ])
+                }
             }
         }
 
         stage('Clean and Build') {
             steps {
-                sh "mvn clean package -DskipTests"
+                script {
+                    sh "mvn clean package -DskipTests"
+                }
             }
-}
- stage('Code Quality Check via SonarQube') {
+        }
+
+        stage('Code Quality Check via SonarQube') {
             steps {
-                sh "mvn verify sonar:sonar -Dsonar.projectKey=station -Dsonar.projectName='station' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_0c3b8011d7b6a0487f317265bcc02fb000de2959"
+                script {
+                    sh "mvn verify sonar:sonar -Dsonar.projectKey=station -Dsonar.projectName='station' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_0c3b8011d7b6a0487f317265bcc02fb000de2959"
+                }
             }
         }
 
-
- stage('Unit Tests') {
+        stage('Unit Tests') {
             steps {
-                sh "mvn test"
+                script {
+                    sh "mvn test"
+                }
             }
         }
-
-        }
+    }
 }
