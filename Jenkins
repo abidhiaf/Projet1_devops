@@ -4,9 +4,13 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git url: 'https://github.com/abidhiaf/Projet1_devops.git', branch: 'ghadaaoun'
+                checkout([$class: 'GitSCM', branches: [[name: 'ghadaaoun']], 
+                          userRemoteConfigs: [[url: 'git@github.com:abidhiaf/Projet1_devops.git']]])
             }
         }
+
+        // ... rest of your pipeline stages ...
+ 
 
         stage('Maven Build') {
             steps {
