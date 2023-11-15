@@ -22,5 +22,15 @@ pipeline {
                 sh "mvn verify sonar:sonar -Dsonar.projectKey=station -Dsonar.projectName='station' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_0c3b8011d7b6a0487f317265bcc02fb000de2959"
             }
         }
+
+
+ stage('Unit Tests') {
+            steps {
+                sh "mvn test"
+            }
+        }
+
+
+
         }
 }
