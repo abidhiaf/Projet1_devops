@@ -17,7 +17,7 @@ public class PisteRestController {
 
     private final IPisteServices pisteServices;
 
-    @Operation(description = "Add Piste")
+    @Operation(description = "Add Pistelove")
     @PostMapping("/add")
     public Piste addPiste(@RequestBody Piste piste){
         return  pisteServices.addPiste(piste);
