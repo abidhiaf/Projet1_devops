@@ -25,6 +25,8 @@ services:
       - springapimysql-net
     ports:
       - 8089:8089
+    volumes:
+      - .m2:/root/.m2
     stdin_open: true
     tty: true
 
