@@ -32,5 +32,34 @@ pipeline {
 
 
 
+ stage('Building Image') {
+            steps {
+                script {
+                    sh 'docker build -t ghadaaoun/spring-image .'
+                }
+            }
+        }
+
+        stage('login ghadaaoun') {
+            steps {
+                sh 'docker login -u ghadaaoun --password dckr_pat_9KH6QUz-69SMkl_WTxVan_zh6k0'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push ghadaaoun/spring-image'
+            }
+        }
+
+
+  stage('Run Spring && MySQL Containers') {
+            steps {
+                script {
+                    sh 'docker compose up -d'
+                }
+            }
+        }
+
         }
 }
