@@ -2,38 +2,44 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout from Git') {
+        stage('Git Checkout') {
+            steps {
+                git url: 'https://github.com/abidhiaf/Projet1_devops.git', branch: 'ghadaaoun'
+            }
+        }
+
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ghadaaoun/spring-image .'
+            }
+        }
+
+        stage('Push to Docker Hub') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', 
-                        branches: [[name: 'ghadaaoun']],
-                        userRemoteConfigs: [[url: 'https://github.com/abidhiaf/Projet1_devops.git']]
-                    ])
+                    sh '''
+                        docker login -u ghadaaoun -p ghadghoud122
+                        docker push ghadaaoun/spring-image
+                    '''
                 }
             }
         }
 
-        stage('Clean and Build') {
+        stage('Docker Compose') {
             steps {
-                script {
-                    sh "mvn clean package -DskipTests"
-                }
-            }
-        }
-
-        stage('Code Quality Check via SonarQube') {
-            steps {
-                script {
-                    sh "mvn verify sonar:sonar -Dsonar.projectKey=station -Dsonar.projectName='station' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_0c3b8011d7b6a0487f317265bcc02fb000de2959"
-                }
-            }
-        }
-
-        stage('Unit Tests') {
-            steps {
-                script {
-                    sh "mvn test"
-                }
+                sh 'docker-compose up -d'
             }
         }
     }
