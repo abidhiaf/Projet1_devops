@@ -2,14 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout from Git') {
+        stage('GIT') {
             steps {
-                script {
-                    checkout([$class: 'GitSCM', 
-                        branches: [[name: 'ghadaaoun']],
-                        userRemoteConfigs: [[url: 'https://github.com/abidhiaf/Projet1_devops.git']]
-                    ])
-                }
+                git branch: 'ghadaaoun',
+                url: 'https://github.com/abidhiaf/Projet1_devops.git'
             }
         }
 
