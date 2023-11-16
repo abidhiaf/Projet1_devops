@@ -18,7 +18,7 @@ public class CourseRestController {
     
     private final ICourseServices courseServices;
 
-    @Operation(description = "Add Course")
+    @Operation(description = "Add Coursessss")
     @PostMapping("/add")
     public Course addCourse(@RequestBody Course course){
         return  courseServices.addCourse(course);
